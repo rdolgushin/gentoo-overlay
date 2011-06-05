@@ -21,14 +21,30 @@ start() {
 }
 
 
+pid_exists(){
+  r=`ps -p ${1} >/dev/null`
+  return ${r}
+}
 
 stop() {
   einfo "Stopping all wsgid instances of app ${SVCNAME}"
   # Discover the instance master process PID and send a SIGTERM
-  for pid in `ls ${APP_BASE_PATH}/${SVCNAME}/pid/master/*.pid`; do
-    ebegin "Killing master process `basename ${pid}`"
-    kill `cat ${pid}`
-    eend $?
+  pid_folder="${APP_BASE_PATH}/${SVCNAME}/pid/master"
+
+  for pid in `ls ${pid_folder}/*.pid`; do
+    pid_file=`basename ${pid}`
+    pid_number=`cat ${pid}`
+    
+    ebegin "Killing master process PID=${pid_number}"
+
+    if pid_exists ${pid_number}; then
+      kill ${pid_number}
+      eend $?
+    else
+      einfo "PID ${pid_number} does not exist anymore, cleaning pidfile ${pid_file}..."
+      rm -f ${pid_folder}/${pid_file}
+      eend $?
+    fi
   done
 }
 
