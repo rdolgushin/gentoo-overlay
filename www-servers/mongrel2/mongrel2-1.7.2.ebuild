@@ -30,7 +30,16 @@ pkg_postinst(){
 	einfo "If you are upgrading mongrel2, remember to update"
 	einfo "your database config:"
 	einfo "Schema modifications for 1.7.2"
-	einfo "		alter table server add column use_ssl INTEGER default 0;"
-
+	einfo "	alter table server add column use_ssl INTEGER default 0;"
+	einfo ""
+	einfo "Since column default_host changed from INTEGER to TEXT and"
+	einfo "sqlite does not support column dropping we must re-create the"
+	einfo "server table, changing the type of default_host column:"
+	einfo ""
+	einfo "	create table s2 as select id, uuid, access_log, error_log, chroot, pid_file, name, bind_addr, port, use_ssl from server;"
+	einfo "	alter table s2 add column default_host TEXT default '';"
+	einfo "	update s2 set default_host = (select default_host from server s1 where s1.id = s2.id);"
+	einfo "	drop table server;"
+	einfo "	create table server as select * from s2;"
 }
 
