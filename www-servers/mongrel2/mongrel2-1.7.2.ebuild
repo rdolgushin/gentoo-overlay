@@ -25,3 +25,12 @@ src_install(){
 	newconfd "${FILESDIR}"/mongrel2.confd mongrel2
 	newinitd "${FILESDIR}"/mongrel2-1.6.initd mongrel2
 }
+
+pkg_postinst(){
+	einfo "If you are upgrading mongrel2, remember to update"
+	einfo "your database config:"
+	einfo "Schema modifications for 1.7.2"
+	einfo "		alter table server add column use_ssl INTEGER default 0;"
+
+}
+
