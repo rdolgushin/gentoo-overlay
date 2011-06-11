@@ -27,6 +27,11 @@ src_install(){
 }
 
 pkg_postinst(){
+	ewarn "Be aware of the bug when you have two routes pointing to the"
+	ewarn "same handler. This problema is already fixed on the latest"
+	ewarn "development branch, so will be included in the next release"
+	einfo ""
+	einfo ""
 	einfo "If you are upgrading mongrel2, remember to update"
 	einfo "your database config:"
 	einfo "Schema modifications for 1.7.2"
