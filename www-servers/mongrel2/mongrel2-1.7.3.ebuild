@@ -27,6 +27,10 @@ src_install(){
 }
 
 pkg_postinst(){
+	ewarn "Be aware that this version does not compile with"
+	ewarn "-j option passed to the make command"
+	ewarn ""
+	ewarn ""
 	einfo "If you are upgrading mongrel2, remember to update"
 	einfo "your database config:"
 	einfo "Schema modifications for 1.7.2"
