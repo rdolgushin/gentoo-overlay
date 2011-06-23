@@ -14,7 +14,7 @@ EAPI=3
 
 DESCRIPTION="ZeroMQ is a brokerless messaging kernel with extremely high performance."
 HOMEPAGE="http://www.zeromq.org/"
-SRC_URI="http://download.zeromq.org/${P}.tar.gz"
+SRC_URI="http://download.zeromq.org/historic/${P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
